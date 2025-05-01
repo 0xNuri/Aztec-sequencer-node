@@ -1,63 +1,119 @@
-Aztec Sequencer Node Setup Guide
-Welcome, aspiring Node Operator!
-You stand at the gateway to the Network — the threshold where sequencers are forged.
-🛠️ Your first task: become an Apprentice.
+# Aztec Sequencer Node Setup Guide
+
+Welcome, aspiring Node Operator!  
+You stand at the gateway to the Network — *the threshold where sequencers are forged.*
+
+## Your First Task: Become an Apprentice
+
 Prove your mettle. Show the Network you can carry the sacred spark.
-If you succeed, you'll rise to Guardian.
-Those with mastery may even ascend to Defender status.
-And if, by some divine accident, you encounter a Sentinel —
-drop to your knees immediately and worship at the feet of a node operator god.
 
-🧱️ What's Your Role?
-The Aztec sequencer node is critical infrastructure.
-It orders transactions, produces blocks, and keeps the zk magic alive.
-Before a block can be published, it must be verified by a validator committee.
-These validators re-execute the transactions and sign off on validity.
-Once 2/3 + 1 signatures are gathered, the sequencer submits it to L1.
-Meanwhile, the archiver monitors L1, stores history, and helps sync new nodes.
+**If you succeed, you’ll rise to Guardian.**  
+Those with mastery may even ascend to *Defender status.*
 
-🛠️ Prerequisites
+And if, by some divine accident, you encounter a *Sentinel*—  
+drop to your knees immediately and worship at the feet of a **node operator god**.
 
-OS: Linux/macOS
-RAM: 16GB
-CPU: 8 cores
-Disk: 1TB SSD
-Bandwidth: 25 Mbps
-Sepolia ETH: For gas (get it from faucets or Discord)
-Ports: Forward TCP + UDP 40400
-IP: Pass external IP to --p2p.p2pIp
-Keys:
+To earn your Apprentice role, you must demonstrate the fundamentals.  
+Your journey begins with setting up a sequencer node.  
+Even if you can’t register yet, don’t worry — just get it up and syncing.
 
-ETH private key (for posting blocks)
-ETH address (to receive rewards)
+Once your node is running and synced, use the following command to prove your worth and *claim your Apprentice title*.
 
+---
 
+## Quickstart
 
+### 1. Setup Your Node
 
-🔧 Run Your Sequencer
-aztec start --node --archiver --sequencer \
-  --network alpha-testnet \
-  --l1-rpc-urls https://example.com \
-  --l1-consensus-host-urls https://example.com \
-  --sequencer.validatorPrivateKey 0xYourPrivateKey \
-  --sequencer.coinbase 0xYourAddress \
-  --p2p.p2pIp 999.99.999.99
+You only need to get through the **Start Your Sequencer** command to get your node running:  
+[Aztec Sequencer Setup Guide](https://docs.aztec.network/the_aztec_network/guides/run_nodes/how_to_run_sequencer)
 
+### 2. Get Info from Your Node
+```bash
+/operator help
+```
 
-🔑 Register as a Validator
-Once fully synced, register with:
-aztec add-l1-validator \
-  --l1-rpc-urls https://eth-sepolia.g.example.com/example/your-key \
-  --private-key your-private-key \
-  --attester your-validator-address \
-  --proposer-eoa your-validator-address \
-  --staking-asset-handler 0xF739D03e98e23A7B65940848aBA8921fF3bAc4b2 \
-  --l1-chain-id 11155111
+### 3. Prove You Are in Sync
+```bash
+/operator start
+```
 
+---
 
-🐫 Docker Compose Setup
+## Hardware Requirements
+
+- **Bandwidth:** 25 Mbps up/down  
+- **CPU:** 8-core  
+- **RAM:** 16 GiB  
+- **Storage:** 1 TB SSD  
+
+---
+
+## Core Concepts
+
+### What Does the Sequencer Do?
+
+The Aztec sequencer node is responsible for:
+
+- Ordering transactions  
+- Producing blocks  
+- Validating transactions with other sequencer nodes  
+- Submitting valid blocks to Ethereum Layer 1
+
+### Archiver Component
+
+Maintains historical chain data by:
+
+- Monitoring L1 for new blocks  
+- Managing contract data and L1-to-L2 messages  
+- Ensuring chain state sync and availability
+
+---
+
+## Prerequisites
+
+- Linux or macOS with terminal access  
+- Aztec tool installed  
+- Aztec testnet version set with:
+```bash
+aztec-up alpha-testnet
+```
+
+- Join the [Aztec Discord](https://discord.gg/aztec) for community support.
+
+---
+
+## Boot Your Sequencer
+
+### Required Resources
+
+- **L1 Execution Client RPCs:** Use Alchemy, Infura, or run Geth/Nethermind  
+- **L1 Consensus RPCs:** Use QuickNode, dRPC, or other verified consensus endpoints  
+- **Ethereum Keys:** Private key (`--sequencer.validatorPrivateKey`) and public address (`--sequencer.coinbase`)  
+- **Networking:** Port forwarding (UDP + TCP) on port `40400`  
+- **Sepolia ETH:** Use [faucets](https://sepolia-faucet.pk910.de/) or ask in Discord
+
+### Launch Command
+```bash
+aztec start --node --archiver --sequencer   --network alpha-testnet   --l1-rpc-urls https://example.com   --l1-consensus-host-urls https://example.com   --sequencer.validatorPrivateKey 0xYourPrivateKey   --sequencer.coinbase 0xYourAddress   --p2p.p2pIp 999.99.999.99
+```
+
+---
+
+## Register as a Validator
+
+Once synced, register with:
+```bash
+aztec add-l1-validator   --l1-rpc-urls https://eth-sepolia.g.example.com/example/your-key   --private-key your-private-key   --attester your-validator-address   --proposer-eoa your-validator-address   --staking-asset-handler 0xF739D03e98e23A7B65940848aBA8921fF3bAc4b2   --l1-chain-id 11155111
+```
+
+---
+
+## Docker Compose Setup
+
+```yaml
+name: aztec-node
 services:
-  network_mode: host
   node:
     image: aztecprotocol/aztec:0.85.0-alpha-testnet.5
     environment:
@@ -73,17 +129,30 @@ services:
       - 40400:40400/tcp
       - 40400:40400/udp
       - 8080:8080
-  volumes:
-    - /home/my-node/node:/data
+    volumes:
+      - /home/my-node/node:/data
+    network_mode: host
+```
 
+---
 
-🧪 Troubleshooting
+## Troubleshooting
 
-Use host.docker.internal for local L1 access (Mac/Windows)
-Use network_mode: host for Linux
-Confirm your L1 clients (e.g., Geth, Reth) are accessible
-Only Geth and Reth are confirmed to work reliably
-Join the Aztec Discord for support
+### Docker Can’t Reach Localhost?
+
+**Use:** `host.docker.internal`  
+**Or:** Add `network_mode: "host"` (Linux only)
+
+### Run Your Own Sepolia Node?
+
+Only **geth** and **reth** are confirmed to work reliably.
+
+---
+
+## Final Words
+
+**The chain awaits. Let’s see what you’re made of.**  
+Happy Sequencing!
 
 
 🔥 The chain awaits. Let's see what you're made of.
