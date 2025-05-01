@@ -5,9 +5,11 @@ Here’s the full markdown text content of the image you uploaded, extracted fro
 Aztec Sequencer Node Setup Guide
 Welcome, aspiring Node Operator!
 You stand at the gateway to the Network — the threshold where sequencers are forged.
+
 🛠️ Your first task: become an Apprentice.
 Prove your mettle. Show the Network you can carry the sacred spark.
 If you succeed, you’ll rise to Guardian.
+
 Those with mastery may even ascend to Defender status.
 And if, by some divine accident, you encounter a Sentinel —
 drop to your knees immediately and worship at the feet of a node operator god.
@@ -16,6 +18,7 @@ drop to your knees immediately and worship at the feet of a node operator god.
 The Aztec sequencer node is critical infrastructure.
 It orders transactions, produces blocks, and keeps the zk magic alive.
 Before a block can be published, it must be verified by a validator committee.
+
 These validators re-execute the transactions and sign off on validity.
 Once 2/3 + 1 signatures are gathered, the sequencer submits it to L1.
 Meanwhile, the archiver monitors L1, stores history, and helps sync new nodes.
@@ -39,6 +42,7 @@ ETH address (to receive rewards)
 
 
 **🔧 Run Your Sequencer**
+
 aztec start --node --archiver --sequencer \
   --network alpha-testnet \
   --l1-rpc-urls https://example.com \
@@ -62,8 +66,10 @@ aztec add-l1-validator \
 🐳 Docker Compose Setup**
 name: aztec-node
 services:
+
   network_mode: host # Optional, run with host networking
   node:
+  
     image: aztecprotocol/aztec:0.85.0-alpha-testnet.5
     environment:
       ETHEREUM_HOSTS: ""
@@ -78,6 +84,7 @@ services:
       - 40400:40400/tcp
       - 40400:40400/udp
       - 8080:8080
+
 
   volumes:
     - /home/my-node/node:/data # Local directory
