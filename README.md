@@ -20,8 +20,8 @@ These validators re-execute the transactions and sign off on validity.
 Once 2/3 + 1 signatures are gathered, the sequencer submits it to L1.
 Meanwhile, the archiver monitors L1, stores history, and helps sync new nodes.
 
-🛠️ Prerequisites
-
+**🛠️ Prerequisites
+**
 OS: Linux/macOS
 RAM: 16GB
 CPU: 8 cores
@@ -38,7 +38,7 @@ ETH address (to receive rewards)
 
 
 
-🔧 Run Your Sequencer
+**🔧 Run Your Sequencer**
 aztec start --node --archiver --sequencer \
   --network alpha-testnet \
   --l1-rpc-urls https://example.com \
@@ -48,7 +48,7 @@ aztec start --node --archiver --sequencer \
   --p2p.p2pIp 999.99.999.99
 
 
-🔑 Register as a Validator
+**🔑 Register as a Validator**
 Once fully synced, register with:
 aztec add-l1-validator \
   --l1-rpc-urls https://eth-sepolia.g.example.com/example/your-key \
@@ -58,10 +58,11 @@ aztec add-l1-validator \
   --staking-asset-handler 0xF739D03e98e23A7B65940848aBA8921fF3bAc4b2 \
   --l1-chain-id 11155111
 
-
-🐳 Docker Compose Setup
+**
+🐳 Docker Compose Setup**
+name: aztec-node
 services:
-  network_mode: host
+  network_mode: host # Optional, run with host networking
   node:
     image: aztecprotocol/aztec:0.85.0-alpha-testnet.5
     environment:
@@ -77,8 +78,9 @@ services:
       - 40400:40400/tcp
       - 40400:40400/udp
       - 8080:8080
+
   volumes:
-    - /home/my-node/node:/data
+    - /home/my-node/node:/data # Local directory
 
 
 🧪 Troubleshooting
