@@ -5,7 +5,7 @@ Aztec Sequencer Node Setup Guide
 Welcome, aspiring Node Operator!
 
 You stand at the gateway to the Network — the threshold where sequencers are forged.
-
+3
 🛠️ Your first task: become an Apprentice.
 Prove your mettle. Show the Network you can carry the sacred spark.
 
