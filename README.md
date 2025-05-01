@@ -20,6 +20,8 @@ And if, by some divine accident, you encounter a Sentinel —
 drop to your knees immediately and worship at the feet of a node operator god.
 
 
+
+
 🧱️ What's Your Role?
 
 The Aztec sequencer node is critical infrastructure.
@@ -33,6 +35,10 @@ These validators re-execute the transactions and sign off on validity.
 Once 2/3 + 1 signatures are gathered, the sequencer submits it to L1.
 
 Meanwhile, the archiver monitors L1, stores history, and helps sync new nodes.
+
+
+
+
 
 
 🛠️ Prerequisites
@@ -61,6 +67,9 @@ ETH address (to receive rewards)
 
 
 
+
+
+
 🔧 Run Your Sequencer
 
 
@@ -77,6 +86,10 @@ aztec start --node --archiver --sequencer \
   --sequencer.coinbase 0xYourAddress \
   
   --p2p.p2pIp 999.99.999.99
+
+
+
+
 
 
 
@@ -101,14 +114,14 @@ aztec add-l1-validator \
 
 
 
+
+
 🐫 Docker Compose Setup
 
 
 services:
   network_mode: host
-  
   node:
-  
     image: aztecprotocol/aztec:0.85.0-alpha-testnet.5
     environment:
       ETHEREUM_HOSTS: ""
@@ -126,6 +139,12 @@ services:
     volumwes:
      - /home/my-node/node:/data
   
+
+
+
+
+
+
 
 🧪 Troubleshooting
 
